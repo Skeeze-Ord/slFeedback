@@ -1,0 +1,16 @@
+scopes:
+    status:
+        label: 'Статус'
+        type: dropdown
+        options: getStatusFilterOptions
+        emptyOption: 'Все статусы'
+    specialist:
+        label: 'Специалист'
+        type: group
+        nameFrom: name
+    category:
+        label: 'Направление'
+        type: group
+        modelClass: Sells\MdCatalog\Models\Category
+        nameFrom: title
+        scope: filterByCategory

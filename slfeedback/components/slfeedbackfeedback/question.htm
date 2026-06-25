@@ -1,0 +1,12 @@
+<div class="acc acc-arrow acc-arrow--light2 {{ isOpen ? 'is-open' : '' }}" data-accordion>
+    <div class="acc__head" data-accordion-opener>
+        <p class="acc__title">{{ question.question }}</p>
+        <i class="slicon-chevron-right"></i>
+    </div>
+    <div class="acc__content" data-accordion-content>
+        <div class="acc__content-inner text-content" data-accordion-inner>
+            <p>Ответ</p>
+            <p>{{ question.answer | richeditor }}</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    is_active:
+        label: 'Показывать на сайте'
+        type: switch
+        default: true
+        span: full
+    id:
+        label: 'Номер вопроса'
+        type: number
+        span: left
+        disabled: true
+    status:
+        label: 'Статус вопроса'
+        type: dropdown
+        span: right
+        comment: 'Статус обновляется автоматически по наличию ответа.'
+        readOnly: true
+
+tabs:
+    activeTab: 'Вопрос'
+    icons:
+        'Вопрос': icon-question-circle
+        'Ответ': icon-commenting
+        'Пользователь': icon-user
+        'Специалист': icon-user-md
+
+    fields:
+        question:
+            label: 'Вопрос'
+            type: textarea
+            size: large
+            span: full
+            readOnly: true
+            tab: 'Вопрос'
+
+        answer:
+            label: 'Ответ'
+            type: richeditor
+            size: large
+            span: full
+            readOnly: true
+            tab: 'Ответ'
+        answered_at:
+            label: 'Дата ответа'
+            type: datepicker
+            mode: date
+            format: d.m.Y
+            firstDay: 1
+            span: left
+            readOnly: true
+            tab: 'Ответ'
+
+        name:
+            label: 'ФИО автора'
+            type: text
+            span: left
+            readOnly: true
+            tab: 'Пользователь'
+        email:
+            label: 'Email автора'
+            type: email
+            span: right
+            readOnly: true
+            tab: 'Пользователь'
+        specialist:
+            label: 'Специалист'
+            type: relation
+            nameFrom: name
+            span: full
+            comment: 'Специалист, к которому относится вопрос.'
+            readOnly: true
+            tab: 'Специалист'

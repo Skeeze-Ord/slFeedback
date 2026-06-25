@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Question
+
+# Model Form Field configuration
+form: $/sells/slfeedback/models/question/fields.yaml
+
+# Model Class name
+modelClass: Sells\SlFeedback\Models\Question
+
+# Default redirect location
+defaultRedirect: sells/slfeedback/questions
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: sells/slfeedback/questions/update/:id
+    redirectClose: sells/slfeedback/questions
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: sells/slfeedback/questions
+    redirectClose: sells/slfeedback/questions
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

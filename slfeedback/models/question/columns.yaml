@@ -1,0 +1,20 @@
+columns:
+    id:
+        label: 'Номер вопроса'
+        searchable: true
+    status:
+        label: 'Статус'
+        type: selectable
+    question:
+        label: 'Вопрос'
+        type: text
+    specialist:
+        label: 'Специалист'
+        type: text
+        relation: specialist
+        valueFrom: name
+        sortable: false
+    category_title:
+        label: 'Направление'
+        type: text
+        sortable: false

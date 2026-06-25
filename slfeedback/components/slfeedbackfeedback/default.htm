@@ -1,0 +1,121 @@
+{% if __SELF__.categories is empty or not __SELF__.selectedCategory %}
+    <section class="section-sm feedback__section">
+        <div class="container">
+            {% partial 'site/no-results' text='Раздел обратной связи пока не настроен' %}
+        </div>
+    </section>
+{% else %}
+<section class="section-sm feedback__section description-tabs--employeers">
+    <div class="container">
+        <div class="feedback__tabs tab description-tabs-2__top tab--button-2" data-tabs>
+            <div class="description-tabs-2__top-select">
+                <div class="form-select form-select--gray form-select--sm">
+                    <div class="form-select__inner">
+                        <div class="form-select__label"></div>
+                        <select class="j-select j-select-single"
+                                name="direction"
+                                data-json="{{ __SELF__.categoriesJson }}"
+                                tabindex="1"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="description-tabs-2__top-buttons tab-buttons" data-tab-buttons>
+                {% for category in __SELF__.categories %}
+                    <div class="tab-button__item {{ __SELF__.selectedCategory and __SELF__.selectedCategory.id == category.id ? 'is-active' : '' }}" data-tab-opener="{{ category.id }}">
+                        <a class="tab-button" href="/feedback/{{ category.slug }}" type="button">{{ category.title | raw }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="feedback__row">
+            <div class="feedback__doctor">
+                <div class="card-doctors">
+                    <div class="card-doctors__image-wrap">
+                        <img loading="lazy"
+                             src="{{ __SELF__.responsible.image.thumbUrl(auto, auto, { mode: 'crop', quality: 95, extension: 'webp' }) }}"
+                             alt="{{ __SELF__.responsible.name }}">
+                        <div class="card-doctors__badges-top">
+{#                            <div class="kit-badge kit-badge-xs --dark">Терапевт</div>#}
+                            {% if __SELF__.responsible.is_manager %}
+                                <div class="kit-badge kit-badge-xs --primary">Заведующий отделением</div>
+                            {% endif %}
+                        </div>
+                        {% if __SELF__.responsible.experience_with_suffix %}
+                            <div class="card-doctors__badges-bottom">
+                                <div class="kit-badge kit-badge-xs --light">Стаж: {{ __SELF__.responsible.experience_with_suffix }}</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-doctors__content">
+                        <h3 class="card-doctors__name">{{ __SELF__.responsible.name }}</h3>
+                        <p class="card-doctors__position">{{ __SELF__.responsible.post }}</p>
+                        {% if __SELF__.responsible.prodoctorov.rating %}
+                            <div class="card-doctors__rating">
+                                <div class="card-doctors__rating-rating" style="--rating: {{ __SELF__.responsible.prodoctorov.rating }}"></div>
+                                {% if __SELF__.responsible.prodoctorov.reviews_count %}
+                                    <a class="card-doctors__rating-link link link-sm link-secondary" href="{{ __SELF__.responsible.reviews_link }}" target="_blank">{{ __SELF__.responsible.reviews_count_label }}</a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <ul class="card-doctors__list">
+                            <li>
+                                <span>Подразделение:</span>
+                                <span>{{ __SELF__.responsible.division.title }}</span>
+                            </li>
+                        </ul>
+                        <div class="card-doctors__buttons">
+                            {% if __SELF__.responsible.is_detail %}
+                                <a class="btn btn-xs btn-white"
+                                   href="/specialists/{{ __SELF__.responsible.id }}"
+                                   data-popup="bottom"
+                                   data-popup-ajax="">
+                                    <span class="btn-text">Подробнее</span>
+                                </a>
+                            {% endif %}
+                            {% if __SELF__.responsible.has_services %}
+                                <a class="btn btn-xs btn-primary" href="#sign-up-paid-doctor" data-doctor-name="{{ __SELF__.responsible.name }}" data-popup="">
+                                    <span class="btn-text">Записаться</span>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="feedback__content">
+                <div class="feedback__top-info">
+                    <p>{{ __SELF__.disclaimer ?: 'ВНИМАНИЕ! Данная форма консультации не является официальным приемом и не направлена на постановку/уточнение окончательного диагноза или выработку рекомендаций по лечению. Форма online консультации ГАУЗ СО СОКБ №1 носит лишь информационный характер. Чтобы получить полное разъяснение по болезни, диагнозу, лечению необходимо записаться на прием к специалисту' }}</p>
+                </div>
+                <div class="feedback__question">
+                    <div class="feedback__question-title">Если в списке нет интересующего Вас вопроса, Вы можете задать здесь.</div>
+                    <div class="feedback__question-button-wrap">
+                        <a class="btn btn-md btn-primary" href="#feedback" data-popup="">
+                            <span class="btn-text">Задать свой вопрос</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="feedback__answers">
+                    {% if __SELF__.questions is empty %}
+                        {% partial 'site/no-results' text='FAQ по выбранному направлению пока нет' %}
+                    {% else %}
+                        <div id="feedback-questions-container" class="feedback__answers-inner acc-wrapper" data-accordions>
+                            {% for question in __SELF__.questions %}
+                                {% partial __SELF__ ~ '::question' question=question isOpen=loop.first %}
+                            {% endfor %}
+                        </div>
+                        <div class="btn-more__wrapper {{ not __SELF__.hasMoreQuestions() ? 'hide' : '' }}">
+                            <!-- window.Site.Modules.Accordion.update() - обновление аккордионов после ajax и добавления их на страницу-->
+                            <button id="feedback-load-more"
+                                    class="btn btn-md btn-secondary-light _icon"
+                                    data-page="1">
+                                <span class="btn-icon">
+                                    <i class="slicon-arrow-down"></i>
+                                </span>
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}

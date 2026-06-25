@@ -1,0 +1,6 @@
+v1.0.1:
+    - 'First version of SlFeedback'
+    - create_questions_table.php
+v1.0.2:
+    - 'Add answer token column to Questions table'
+    - modify_questions_table_add_answer_token_column.php
