@@ -1,0 +1,57 @@
+subject = "{{ mailSubject }}"
+description = "Уведомление автору вопроса об ответе специалиста"
+==
+Здравствуйте, {{ question.name }}.
+
+На ваш вопрос ответил специалист{% if specialist %}: {{ specialist.name }}{% endif %}.
+
+Ваш вопрос:
+{{ question.question }}
+
+Ответ:
+{{ question.answer|striptags }}
+
+{% if feedbackUrl %}
+Посмотреть ответ на сайте:
+{{ feedbackUrl }}
+{% endif %}
+==
+<div style="margin:0;padding:24px;background:#f4f5f7;font-family:Arial,sans-serif;color:#1f2933;">
+    <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e1e5ea;">
+        <div style="padding:24px 28px;border-bottom:1px solid #e1e5ea;">
+            <div style="font-size:12px;line-height:16px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;">
+                Ответ специалиста
+            </div>
+            <h1 style="margin:8px 0 0;font-size:22px;line-height:28px;color:#111827;font-weight:600;">
+                На ваш вопрос ответили
+            </h1>
+        </div>
+
+        <div style="padding:8px 28px 24px;">
+            {% if specialist %}
+                <div style="padding:14px 0;border-bottom:1px solid #eef1f4;">
+                    <div style="font-size:12px;line-height:16px;color:#6b7280;">Специалист</div>
+                    <div style="margin-top:4px;font-size:16px;line-height:22px;color:#111827;">{{ specialist.name }}</div>
+                </div>
+            {% endif %}
+
+            <div style="padding:14px 0;border-bottom:1px solid #eef1f4;">
+                <div style="font-size:12px;line-height:16px;color:#6b7280;">Ваш вопрос</div>
+                <div style="margin-top:4px;font-size:16px;line-height:22px;color:#111827;">{{ question.question|nl2br }}</div>
+            </div>
+
+            <div style="padding:14px 0;">
+                <div style="font-size:12px;line-height:16px;color:#6b7280;">Ответ</div>
+                <div style="margin-top:4px;font-size:16px;line-height:22px;color:#111827;">{{ question.answer|raw }}</div>
+            </div>
+
+            {% if feedbackUrl %}
+                <div style="padding:18px 0 0;">
+                    <a href="{{ feedbackUrl }}" target="_blank" style="display:inline-block;padding:10px 16px;background:#2563eb;color:#ffffff;text-decoration:none;font-size:15px;line-height:20px;font-weight:600;">
+                        Посмотреть ответ на сайте
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -7,9 +7,11 @@ use Backend;
 use BackendMenu;
 use Flash;
 use October\Rain\Exception\ApplicationException;
+use Sells\SlFeedback\Classes\Enums\enums\AnswerNotificationStatus;
 use Sells\SlFeedback\Classes\Enums\enums\QuestionStatuses;
 use Sells\SlFeedback\Models\Question;
 use Sells\SlFeedback\Models\Settings;
+use Sells\SlFeedback\Services\QuestionAnswerService;
 
 class Questions extends Controller
 {
@@ -55,6 +57,15 @@ class Questions extends Controller
         Flash::success('Дисклеймер сохранён');
     }
 
+    public function formAfterSave(Question $question): void
+    {
+        $mailStatus = $this->getQuestionAnswerService()->sendNotificationToAuthor($question);
+
+        if ($mailStatus === AnswerNotificationStatus::FAILED) {
+            Flash::warning('Ответ сохранён, но письмо пользователю отправить не удалось');
+        }
+    }
+
     public function answer(?string $questionId = null, ?string $token = null): void
     {
         $question = $this->findQuestionByToken($questionId, $token);
@@ -80,14 +91,37 @@ class Questions extends Controller
         $questionData = (array) post('Question', []);
         $answer = trim((string) post('answer', $questionData['answer'] ?? ''));
 
-        if ($answer === '') {
-            throw new ApplicationException('Введите ответ');
+        $questionAnswerService = $this->getQuestionAnswerService();
+        $mailStatus = $questionAnswerService->saveAnswer($question, $answer);
+
+        if ($mailStatus === AnswerNotificationStatus::NOT_NEEDED) {
+            Flash::success('Ответ сохранён');
+
+            return;
         }
 
-        $question->answer = $answer;
-        $question->save();
+        if ($mailStatus === AnswerNotificationStatus::TIMEOUT) {
+            Flash::success(
+                'Ответ сохранён. Письмо пользователю не отправлено повторно: действует таймаут '
+                . $questionAnswerService->getResendTimeoutMinutes()
+                . ' минут.'
+            );
 
-        Flash::success('Ответ сохранён');
+            return;
+        }
+
+        if ($mailStatus === AnswerNotificationStatus::FAILED) {
+            Flash::warning('Ответ сохранён, но письмо пользователю отправить не удалось');
+
+            return;
+        }
+
+        Flash::success('Ответ сохранён и отправлен пользователю');
+    }
+
+    private function getQuestionAnswerService(): QuestionAnswerService
+    {
+        return new QuestionAnswerService();
     }
 
     /**

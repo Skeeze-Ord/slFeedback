@@ -18,7 +18,7 @@ fields:
         type: dropdown
         span: right
         comment: 'Статус обновляется автоматически по наличию ответа.'
-        readOnly: true
+        disabled: true
 
 tabs:
     activeTab: 'Вопрос'
@@ -34,7 +34,7 @@ tabs:
             type: textarea
             size: large
             span: full
-            readOnly: true
+            disabled: true
             tab: 'Вопрос'
 
         answer:
@@ -42,7 +42,6 @@ tabs:
             type: richeditor
             size: large
             span: full
-            readOnly: true
             tab: 'Ответ'
         answered_at:
             label: 'Дата ответа'
@@ -51,20 +50,29 @@ tabs:
             format: d.m.Y
             firstDay: 1
             span: left
-            readOnly: true
+            disabled: true
+            tab: 'Ответ'
+        answer_email_sent_at:
+            label: 'Письмо пользователю отправлено'
+            type: datepicker
+            mode: datetime
+            format: d.m.Y
+            firstDay: 1
+            span: right
+            disabled: true
             tab: 'Ответ'
 
         name:
             label: 'ФИО автора'
             type: text
             span: left
-            readOnly: true
+            disabled: true
             tab: 'Пользователь'
         email:
             label: 'Email автора'
             type: email
             span: right
-            readOnly: true
+            disabled: true
             tab: 'Пользователь'
         specialist:
             label: 'Специалист'
@@ -72,5 +80,5 @@ tabs:
             nameFrom: name
             span: full
             comment: 'Специалист, к которому относится вопрос.'
-            readOnly: true
+            disabled: true
             tab: 'Специалист'

@@ -22,7 +22,7 @@ class QuestionsController
             return ApiResponder::success([
                 'question' => (new QuestionResource($question))->toArray($request),
             ], 'Вопрос отправлен');
-        } catch (Throwable $exception) {
+        } catch(Throwable $exception) {
             Log::error('Question submit error', [
                 'error' => $exception->getMessage(),
             ]);

@@ -15,7 +15,7 @@ class ApiResponder
             'message' => $message,
         ];
 
-        if ($data !== []) {
+        if($data !== []) {
             $response['data'] = $data;
         }
 

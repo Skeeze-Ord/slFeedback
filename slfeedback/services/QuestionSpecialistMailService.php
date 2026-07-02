@@ -16,9 +16,9 @@ class QuestionSpecialistMailService
     public function send(Question $question): bool
     {
         $specialist = $question->specialist;
-        $email = trim((string) $specialist?->email);
+        $email = trim((string)$specialist?->email);
 
-        if ($email === '') {
+        if($email === '') {
             return false;
         }
 
@@ -33,12 +33,12 @@ class QuestionSpecialistMailService
                     'specialist' => $specialist,
                     'answerUrl' => $this->getAnswerUrl($question),
                 ],
-                function ($message) use ($mailSubject, $email) {
+                function($message) use ($mailSubject, $email) {
                     $message->to($email);
                     $message->subject($mailSubject);
                 }
             );
-        } catch (Throwable $throwable) {
+        } catch(Throwable $throwable) {
             trace_log($throwable->getMessage());
 
             return false;

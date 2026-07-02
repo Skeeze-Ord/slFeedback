@@ -4,3 +4,6 @@ v1.0.1:
 v1.0.2:
     - 'Add answer token column to Questions table'
     - modify_questions_table_add_answer_token_column.php
+v1.0.3:
+    - 'Add answer email sent timestamp to Questions table'
+    - modify_questions_table_add_answer_email_sent_at_column.php

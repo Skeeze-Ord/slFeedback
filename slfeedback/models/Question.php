@@ -18,6 +18,8 @@ use Sells\SlFeedback\Classes\Enums\enums\QuestionStatuses;
  * @property string $answer
  * @property string $status
  * @property Carbon|null $answered_at
+ * @property Carbon|null $answer_email_sent_at
+ * @property string|null $answer_email_hash
  * @property int $specialist_id
  * @property string|null $answer_token
  * @property string|null $category_title
@@ -38,7 +40,7 @@ class Question extends Model
 
     protected $fillable = ['stats', 'name', 'email', 'question', 'answered_at'];
 
-    protected $dates = ['answered_at'];
+    protected $dates = ['answered_at', 'answer_email_sent_at'];
 
     public $belongsTo = [
         'specialist' => [
@@ -64,9 +66,9 @@ class Question extends Model
 
     public function scopeFilterByCategory(Builder $query, array|string|null $categoryIds): Builder
     {
-        $categoryIds = array_filter((array) $categoryIds);
+        $categoryIds = array_filter((array)$categoryIds);
 
-        if (!$categoryIds) {
+        if(!$categoryIds) {
             return $query;
         }
 
@@ -82,14 +84,14 @@ class Question extends Model
 
     public function beforeCreate(): void
     {
-        if (!$this->answer_token) {
+        if(!$this->answer_token) {
             $this->answer_token = Str::random(64);
         }
     }
 
     private function syncAnswerState(): void
     {
-        if (trim((string) $this->answer) === '') {
+        if(trim((string)$this->answer) === '') {
             $this->status = QuestionStatuses::NEW->value;
             $this->answered_at = null;
 
@@ -99,7 +101,7 @@ class Question extends Model
         $this->status = QuestionStatuses::ANSWERED->value;
         $originalAnsweredAt = $this->getOriginal('answered_at');
 
-        if ($originalAnsweredAt) {
+        if($originalAnsweredAt) {
             $this->answered_at = $originalAnsweredAt;
 
             return;

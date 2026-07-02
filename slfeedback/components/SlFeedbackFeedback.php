@@ -17,7 +17,7 @@ class SlFeedbackFeedback extends ComponentBase
 
     public ?Specialist $responsible = null;
 
-    private const QUESTIONS_LIMIT = 3;
+    private const QUESTIONS_LIMIT = 8;
 
     public function componentDetails(): array
     {
@@ -108,7 +108,7 @@ class SlFeedbackFeedback extends ComponentBase
 
     public function onLoadMoreQuestions(): array
     {
-        $page = (int) post('page', 1);
+        $page = (int)post('page', 1);
 
         $this->selectedCategory = $this->getSelectedCategory();
 
@@ -129,7 +129,7 @@ class SlFeedbackFeedback extends ComponentBase
 
     private function getQuestionsQuery()
     {
-        if (!$this->selectedCategory) {
+        if(!$this->selectedCategory) {
             return Question::query()->where('id', 0);
         }
 

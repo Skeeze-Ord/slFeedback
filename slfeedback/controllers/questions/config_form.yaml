@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Question
+name: FAQ
 
 # Model Form Field configuration
 form: $/sells/slfeedback/models/question/fields.yaml

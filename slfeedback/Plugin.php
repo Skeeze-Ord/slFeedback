@@ -35,6 +35,7 @@ class Plugin extends PluginBase
     {
         return [
             'sells.slfeedback::mail.question_for_specialist' => 'sells.slfeedback::mail.question_for_specialist',
+            'sells.slfeedback::mail.answer_for_author' => 'sells.slfeedback::mail.answer_for_author',
         ];
     }
 

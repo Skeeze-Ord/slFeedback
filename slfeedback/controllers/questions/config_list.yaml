@@ -9,7 +9,7 @@ list: $/sells/slfeedback/models/question/columns.yaml
 modelClass: Sells\SlFeedback\Models\Question
 
 # List Title
-title: Manage Questions
+title: Управление обратной связью
 
 # Link URL for each record
 recordUrl: sells/slfeedback/questions/update/:id
@@ -32,7 +32,7 @@ showSorting: true
 # Default sorting column
 defaultSort:
     column: id
-    direction: asc
+    direction: desc
 
 # Display checkboxes next to each record
 showCheckboxes: true

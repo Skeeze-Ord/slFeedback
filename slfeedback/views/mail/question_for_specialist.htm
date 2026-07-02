@@ -37,7 +37,7 @@ Email: {{ question.email }}
             </div>
             <div style="padding:14px 0;">
                 <div style="font-size:12px;line-height:16px;color:#6b7280;">Вопрос</div>
-                <div style="margin-top:4px;font-size:16px;line-height:22px;color:#111827;">{{ question.question|nl2br }}</div>
+                <div style="margin-top:4px;font-size:16px;line-height:22px;color:#111827;">{{ question.question|striptags }}</div>
             </div>
             <div style="padding:18px 0 0;">
                 <a href="{{ answerUrl }}" target="_blank" style="display:inline-block;padding:10px 16px;background:#2563eb;color:#ffffff;text-decoration:none;font-size:15px;line-height:20px;font-weight:600;">

@@ -1,10 +1,3 @@
-<?php Block::put('breadcrumb') ?>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?= Backend::url('sells/slfeedback/questions') ?>">Вопросы</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Ответ</li>
-    </ol>
-<?php Block::endPut() ?>
-
 <div class="layout-row">
     <div class="scoreboard">
         <div data-control="toolbar">

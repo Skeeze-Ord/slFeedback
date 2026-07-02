@@ -2,6 +2,7 @@ columns:
     id:
         label: 'Номер вопроса'
         searchable: true
+        sortableDefault: desc
     status:
         label: 'Статус'
         type: selectable
