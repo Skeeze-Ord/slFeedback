@@ -13,7 +13,7 @@ use Throwable;
 class QuestionAuthorAnswerMailService
 {
     private const MAIL_TEMPLATE = 'sells.slfeedback::mail.answer_for_author';
-    private const RESEND_TIMEOUT_MINUTES = 1;
+    private const RESEND_TIMEOUT_MINUTES = 3;
 
     public function canSend(Question $question): bool
     {
